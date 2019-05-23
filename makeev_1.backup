@@ -1,0 +1,343 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 11.2
+-- Dumped by pg_dump version 11.2
+
+-- Started on 2019-05-22 23:40:45
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- TOC entry 2857 (class 1262 OID 25350)
+-- Name: Makeev_1; Type: DATABASE; Schema: -; Owner: postgres
+--
+
+CREATE DATABASE "Makeev_1" WITH TEMPLATE = template0 ENCODING = 'UTF8' LC_COLLATE = 'Russian_Russia.1251' LC_CTYPE = 'Russian_Russia.1251';
+
+
+ALTER DATABASE "Makeev_1" OWNER TO postgres;
+
+\connect "Makeev_1"
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- TOC entry 196 (class 1259 OID 25404)
+-- Name: hospital; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.hospital (
+    id_hospital character varying(3) NOT NULL,
+    name character varying,
+    quantity character(6) NOT NULL
+);
+
+
+ALTER TABLE public.hospital OWNER TO postgres;
+
+--
+-- TOC entry 200 (class 1259 OID 25437)
+-- Name: inventory; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.inventory (
+    id_inventoty character varying(3) NOT NULL,
+    id_hos character(3) NOT NULL,
+    id_it character(3) NOT NULL,
+    quantity character(6)
+);
+
+
+ALTER TABLE public.inventory OWNER TO postgres;
+
+--
+-- TOC entry 198 (class 1259 OID 25421)
+-- Name: items; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.items (
+    id_item character varying(3) NOT NULL,
+    name character varying,
+    okp character(6)
+);
+
+
+ALTER TABLE public.items OWNER TO postgres;
+
+--
+-- TOC entry 197 (class 1259 OID 25412)
+-- Name: list; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.list (
+    id_list character varying(3) NOT NULL,
+    id_hos character(3) NOT NULL,
+    okp character(6),
+    urgensy boolean DEFAULT false,
+    comment text NOT NULL
+);
+
+
+ALTER TABLE public.list OWNER TO postgres;
+
+--
+-- TOC entry 201 (class 1259 OID 25462)
+-- Name: userinfo; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.userinfo (
+    login text NOT NULL,
+    password text,
+    accesslevel integer
+);
+
+
+ALTER TABLE public.userinfo OWNER TO postgres;
+
+--
+-- TOC entry 199 (class 1259 OID 25429)
+-- Name: zone; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.zone (
+    id_zone character varying(3) NOT NULL,
+    number character(3) NOT NULL,
+    id_hos character(3) NOT NULL,
+    territory text NOT NULL
+);
+
+
+ALTER TABLE public.zone OWNER TO postgres;
+
+--
+-- TOC entry 2846 (class 0 OID 25404)
+-- Dependencies: 196
+-- Data for Name: hospital; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.hospital (id_hospital, name, quantity) FROM stdin;
+002	test2	3500  
+003	test2	3500  
+010	Больница1	14000 
+011	Больница2	9000  
+012	Больница3	5000  
+013	Больница4	16000 
+014	Больница5	9000  
+\.
+
+
+--
+-- TOC entry 2850 (class 0 OID 25437)
+-- Dependencies: 200
+-- Data for Name: inventory; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.inventory (id_inventoty, id_hos, id_it, quantity) FROM stdin;
+018	012	010	2     
+024	014	012	2     
+026	014	014	4     
+011	010	011	3     
+27	013	010	3     
+025	014	013	3     
+016	011	013	4     
+010	010	010	1     
+012	010	013	1     
+013	010	014	1     
+014	011	010	1     
+015	011	011	1     
+017	011	014	1     
+019	012	013	1     
+020	013	013	1     
+021	013	014	1     
+022	014	010	1     
+023	014	011	1     
+29	012	011	1     
+28	010	012	2     
+\.
+
+
+--
+-- TOC entry 2848 (class 0 OID 25421)
+-- Dependencies: 198
+-- Data for Name: items; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.items (id_item, name, okp) FROM stdin;
+010	Электрокардиограф	940001
+011	Тонометр внутреннего давления	940002
+012	Фармацевтический холодильник	940003
+013	Центрифуга лаборантская	940004
+014	Отсасыватель портативный	940005
+\.
+
+
+--
+-- TOC entry 2847 (class 0 OID 25412)
+-- Dependencies: 197
+-- Data for Name: list; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.list (id_list, id_hos, okp, urgensy, comment) FROM stdin;
+010	010	940001	f	Коммент1
+011	010	940002	t	Коммент2
+012	010	940003	f	Коммент3
+013	011	940001	f	Коммент4
+015	012	940001	f	Коммент6
+016	012	940002	t	Коммент7
+018	014	940001	f	Коммент9
+019	014	940002	f	Коммент10
+020	014	940003	f	Коммент11
+022	014	940005	f	Коммент13
+023	014	940005	t	Коммент14
+\.
+
+
+--
+-- TOC entry 2851 (class 0 OID 25462)
+-- Dependencies: 201
+-- Data for Name: userinfo; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.userinfo (login, password, accesslevel) FROM stdin;
+admin	password	3
+doctor	password	1
+maindoctor	password	2
+\.
+
+
+--
+-- TOC entry 2849 (class 0 OID 25429)
+-- Dependencies: 199
+-- Data for Name: zone; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.zone (id_zone, number, id_hos, territory) FROM stdin;
+001	001	002	lalala
+010	1  	010	Улица1, Улица2
+011	2  	010	Улица10, Улица11
+012	2  	011	Улица10, Улица11
+013	1  	012	Улица1, Улица2
+014	3  	013	Улица3, Улица4
+015	3  	014	Улица3, Улица4
+16	53 	010	Улица Сезам
+\.
+
+
+--
+-- TOC entry 2710 (class 2606 OID 25411)
+-- Name: hospital hospital_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.hospital
+    ADD CONSTRAINT hospital_pk PRIMARY KEY (id_hospital);
+
+
+--
+-- TOC entry 2718 (class 2606 OID 25441)
+-- Name: inventory inventory_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.inventory
+    ADD CONSTRAINT inventory_pk PRIMARY KEY (id_inventoty);
+
+
+--
+-- TOC entry 2714 (class 2606 OID 25428)
+-- Name: items items_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.items
+    ADD CONSTRAINT items_pk PRIMARY KEY (id_item);
+
+
+--
+-- TOC entry 2712 (class 2606 OID 25420)
+-- Name: list list_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.list
+    ADD CONSTRAINT list_pk PRIMARY KEY (id_list);
+
+
+--
+-- TOC entry 2720 (class 2606 OID 25469)
+-- Name: userinfo userinfo_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.userinfo
+    ADD CONSTRAINT userinfo_pkey PRIMARY KEY (login);
+
+
+--
+-- TOC entry 2716 (class 2606 OID 25436)
+-- Name: zone zone_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.zone
+    ADD CONSTRAINT zone_pk PRIMARY KEY (id_zone);
+
+
+--
+-- TOC entry 2723 (class 2606 OID 25452)
+-- Name: inventory inventory_fk0; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.inventory
+    ADD CONSTRAINT inventory_fk0 FOREIGN KEY (id_hos) REFERENCES public.hospital(id_hospital);
+
+
+--
+-- TOC entry 2724 (class 2606 OID 25457)
+-- Name: inventory inventory_fk1; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.inventory
+    ADD CONSTRAINT inventory_fk1 FOREIGN KEY (id_it) REFERENCES public.items(id_item);
+
+
+--
+-- TOC entry 2721 (class 2606 OID 25442)
+-- Name: list list_fk0; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.list
+    ADD CONSTRAINT list_fk0 FOREIGN KEY (id_hos) REFERENCES public.hospital(id_hospital);
+
+
+--
+-- TOC entry 2722 (class 2606 OID 25447)
+-- Name: zone zone_fk0; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.zone
+    ADD CONSTRAINT zone_fk0 FOREIGN KEY (id_hos) REFERENCES public.hospital(id_hospital);
+
+
+-- Completed on 2019-05-22 23:40:48
+
+--
+-- PostgreSQL database dump complete
+--
+
